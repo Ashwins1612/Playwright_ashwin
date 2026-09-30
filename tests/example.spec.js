@@ -1,25 +1,18 @@
 // @ts-check
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('../fixtures/test.fixture');
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe('Playwright documentation', () => {
+  test('has the expected title', async ({ homePage, page }) => {
+    await homePage.open();
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+    await expect(page).toHaveTitle(/Playwright/);
+  });
+
+  test('opens the getting started guide', async ({ homePage }) => {
+    await homePage.open();
+    await homePage.openGettingStarted();
+
+    await expect(homePage.installationHeading).toBeVisible();
+  });
 });
-
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
-
-
-//commit
-//commit
-//test(){}
 //
